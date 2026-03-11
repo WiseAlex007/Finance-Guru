@@ -129,3 +129,10 @@ Plans/
 
 # Overstory (local)
 .overstory/
+.dmux/
+
+# Finance Guru Desktop
+finance-guru-desktop/node_modules/
+finance-guru-desktop/dist/
+finance-guru-desktop/build/
+finance-guru-desktop/.obsidian/
