@@ -12,8 +12,7 @@ function createListener(channel) {
 // ── Expose protected API ──
 contextBridge.exposeInMainWorld('electron_api', {
   app: {
-    getRuntimeStatus: () => ipcRenderer.invoke('app-runtime-status'),
-    onRuntimeStatus: createListener('runtime-status')
+    getRuntimeStatus: () => ipcRenderer.invoke('app-runtime-status')
   },
 
   // ── Analysis (direct Python execution) ──
