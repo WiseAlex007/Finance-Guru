@@ -2,6 +2,7 @@ const { ipcMain } = require('electron');
 const { validateRuntime } = require('../config/validateRuntime');
 const { registerAnalysisHandlers } = require('./analysis.ipc');
 const { registerCsvHandlers } = require('./csv.ipc');
+const { registerChatHandlers } = require('./chat.ipc');
 
 // Cache the runtime result so it's consistent and available for both
 // the startup check and the app-runtime-status IPC handler
@@ -26,7 +27,8 @@ function registerAllHandlers() {
   // ── CSV (file dialog + read) ──
   registerCsvHandlers();
 
-  // Chat handlers added in Task 16
+  // ── Chat (Agent SDK streaming) ──
+  registerChatHandlers();
 }
 
 module.exports = { registerAllHandlers, getCachedRuntimeResult };
