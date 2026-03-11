@@ -37,25 +37,28 @@ updateTime();
 setInterval(updateTime, 60000);
 
 // ── Runtime status preflight ──
-let runtimeStatus = null;
+// Stored on the module-level object so later code can read the resolved value.
+// Do NOT export runtimeStatus as a primitive — it would capture the initial null.
+const appState = { runtimeStatus: null };
 
 async function init() {
   try {
-    runtimeStatus = await api.app.getRuntimeStatus();
+    appState.runtimeStatus = await api.app.getRuntimeStatus();
   } catch (e) {
     document.getElementById('status-text').textContent = 'Failed to check runtime status';
     return;
   }
 
-  if (runtimeStatus.warnings && runtimeStatus.warnings.length > 0) {
+  const rs = appState.runtimeStatus;
+  if (rs.warnings && rs.warnings.length > 0) {
     document.getElementById('status-text').textContent =
-      `Warning: ${runtimeStatus.warnings[0]}`;
+      `Warning: ${rs.warnings[0]}`;
   } else {
     document.getElementById('status-text').textContent = 'Ready';
   }
 
   // If Claude auth is unavailable, show warning in chat panel
-  if (!runtimeStatus.claudeAuth?.ok) {
+  if (!rs.claudeAuth?.ok) {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.innerHTML = `
       <div class="chat-auth-warning">
@@ -83,5 +86,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Exports for use by later modules (command palette, renderers, chat)
-module.exports = { switchToPanel, runtimeStatus };
+// Exports for use by later modules (command palette, renderers, chat).
+// appState is a mutable object — readers always see the latest runtimeStatus.
+module.exports = { switchToPanel, appState };

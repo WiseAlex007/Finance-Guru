@@ -10,62 +10,123 @@ const COMMAND_TO_SCRIPT = {
   'analysis.options_chain_cli': 'src/analysis/options_chain_cli.py'
 };
 
-function registerAnalysisHandlers() {
-  ipcMain.handle('analysis-run', async (event, { command, args = [] }) => {
-    if (!ALLOWED_ANALYSIS_COMMANDS.has(command)) {
-      throw new Error(`Unsupported analysis command: ${command}`);
-    }
+/**
+ * Core analysis execution — testable without Electron.
+ * Returns { success, data } or { success, error } with structured error shape.
+ */
+function runAnalysis({ command, args = [], onProgress }) {
+  // Validate command against allowlist
+  if (!ALLOWED_ANALYSIS_COMMANDS.has(command)) {
+    return Promise.resolve({
+      success: false,
+      error: `Unsupported analysis command: ${command}`,
+      type: 'validation'
+    });
+  }
 
-    const modulePath = COMMAND_TO_SCRIPT[command];
-    if (!modulePath) {
-      throw new Error(`No CLI mapping found for command: ${command}`);
-    }
+  const modulePath = COMMAND_TO_SCRIPT[command];
+  if (!modulePath) {
+    return Promise.resolve({
+      success: false,
+      error: `No CLI mapping found for command: ${command}`,
+      type: 'validation'
+    });
+  }
 
-    return new Promise((resolve, reject) => {
-      const fullArgs = [modulePath, ...args, '--output', 'json'];
+  return new Promise((resolve) => {
+    const fullArgs = [modulePath, ...args, '--output', 'json'];
 
-      const py = spawn(PYTHON_BIN, fullArgs, {
+    let py;
+    try {
+      py = spawn(PYTHON_BIN, fullArgs, {
         cwd: FAMILY_OFFICE_ROOT,
         env: {
           ...process.env,
           PYTHONPATH: `${FAMILY_OFFICE_ROOT}/src`
         }
       });
-
-      let stdout = '';
-      let stderr = '';
-
-      py.stdout.on('data', chunk => { stdout += chunk; });
-
-      py.stderr.on('data', chunk => {
-        stderr += chunk;
-        event.sender.send('analysis-progress', { text: chunk.toString() });
+    } catch (err) {
+      resolve({
+        success: false,
+        error: `Failed to spawn Python: ${err.message}`,
+        type: 'spawn'
       });
+      return;
+    }
 
-      py.on('error', (err) => {
-        reject(new Error(`Failed to spawn Python: ${err.message}`));
+    let stdout = '';
+    let stderr = '';
+
+    py.stdout.on('data', chunk => { stdout += chunk; });
+
+    py.stderr.on('data', chunk => {
+      stderr += chunk;
+      if (onProgress) onProgress(chunk.toString());
+    });
+
+    py.on('error', (err) => {
+      resolve({
+        success: false,
+        error: `Failed to spawn Python: ${err.message}`,
+        type: 'spawn'
       });
+    });
 
-      // Timeout: 60s (yfinance + options chain can be slow)
-      const timeout = setTimeout(() => {
-        py.kill('SIGTERM');
-        reject(new Error('Analysis timed out after 60 seconds'));
-      }, 60000);
-
-      py.on('close', code => {
-        clearTimeout(timeout);
-        if (code !== 0) {
-          reject(new Error(stderr.trim() || `Python exited with code ${code}`));
-          return;
-        }
-        try {
-          resolve(JSON.parse(stdout));
-        } catch (e) {
-          reject(new Error(`Invalid JSON from Python CLI. Raw output: ${stdout.slice(0, 500)}`));
-        }
+    // Timeout: 60s (yfinance + options chain can be slow)
+    const timeout = setTimeout(() => {
+      py.kill('SIGTERM');
+      resolve({
+        success: false,
+        error: 'Analysis timed out after 60 seconds',
+        type: 'timeout'
       });
+    }, 60000);
+
+    py.on('close', code => {
+      clearTimeout(timeout);
+      if (code !== 0) {
+        resolve({
+          success: false,
+          error: stderr.trim() || `Python exited with code ${code}`,
+          exitCode: code,
+          type: 'exit'
+        });
+        return;
+      }
+      try {
+        resolve({ success: true, data: JSON.parse(stdout) });
+      } catch (e) {
+        resolve({
+          success: false,
+          error: 'Invalid JSON from Python CLI',
+          raw: stdout.slice(0, 500),
+          type: 'parse'
+        });
+      }
     });
   });
 }
 
-module.exports = { registerAnalysisHandlers, COMMAND_TO_SCRIPT };
+function registerAnalysisHandlers() {
+  ipcMain.handle('analysis-run', async (event, { command, args = [] }) => {
+    const result = await runAnalysis({
+      command,
+      args,
+      onProgress: (text) => event.sender.send('analysis-progress', { text })
+    });
+
+    if (!result.success) {
+      // Throw so ipcMain.handle propagates the error to the renderer.
+      // Attach structured fields so renderer can inspect them.
+      const err = new Error(result.error);
+      err.type = result.type;
+      if (result.exitCode !== undefined) err.exitCode = result.exitCode;
+      if (result.raw !== undefined) err.raw = result.raw;
+      throw err;
+    }
+
+    return result.data;
+  });
+}
+
+module.exports = { registerAnalysisHandlers, runAnalysis, COMMAND_TO_SCRIPT };
