@@ -8,31 +8,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- _Agent skills system_ — new `.agents/skills/` directory with 17 skill modules (browser automation, brainstorming, coding tutor, document review, frontend design, orchestrating swarms, and more)
+- _Portfolio & Transaction syncing workflows_ — IngestPositions and IngestTransactions workflows for broker CSV import
+- _Options chain CLI_ (`src/analysis/options_pricer_cli.py`) — Greeks, strategy analysis, and chain data
+- _Readiness report skill_ — evaluate codebase readiness for autonomous AI development
+- _Hedging & Portfolio Protection_ — complete Milestone 2 (v2.0) with hedging integration and interactive knowledge explorer specs
+- _Runtime path validation_ — repo-bound desktop app validation with comprehensive tests
+- _v3 roadmap_ — 11 phases across 3 milestones with requirements specification
+- _Tmux persona team wrapper_ — Overstory-powered guru session management
+- _GitHub social card_ and FUNDING.yml for repository
+- _MCP Launchpad verification step_ in setup flow
+- _Dividend strategy playground_ and config cleanup
 - Codex full review report and validation system
 - Broker CSV mapping templates for multi-broker support
 - Pre-codex validation script and reporting
 - Comprehensive testing infrastructure (Master Test Runner)
 - Integration tests: Full setup flow, Onboarding resume, Idempotent re-run
-- Manual test checklist documentation
 - Gitignore protection tests for sensitive data
 
 ### Changed
+- _Repo hygiene overhaul_ — untracked GSD/planning files, removed beads/guru legacy, slimmed CLAUDE.md
+- _Agent roster update_ — added Finance Guru agents, removed legacy backend skills
+- _Docs reorganization_ — category subdirs with frontmatter, updated index and internal links
+- _README rewrite_ — hero banner, architecture diagram, narrative format via AwesomeReadme skill
 - Converted hooks to Bun runtime for better performance
-  - `load-fin-core-config` hook now uses Bun
-  - `skill-activation-prompt` hook now uses Bun
-  - `post-tool-use-tracker` hook now uses Bun
 - Enhanced setup.sh with onboarding integration
-- Improved documentation structure
-  - Enhanced SETUP.md with quick start and verification checklist
-  - Enhanced API key documentation with acquisition guide
-  - Added comprehensive troubleshooting documentation
-  - Added Fork Model README section
+- Removed legacy error-handling hook, documented justfile recipes
+- Moved specs and dev artifacts into `.dev/` directory
 
 ### Fixed
-- Removed .beads/interactions.jsonl from git tracking
+- Agent SDK chat — use string prompt with session resume
+- Mocked dividend schedules for CI compatibility
+- Tightened runtime validation tests, SDK dependency, and auth checks
+- PR review findings across CLI, specs, and skill
 - Addressed Codex P0 critical issues
-- Removed hardcoded user name references for better fork compatibility
-- Made skill-activation-prompt hook executable
+- Removed hardcoded user name references for fork compatibility
+
+### Security
+- Upgraded protobuf to >=6.33.5 for CVE recursion depth bypass
+- Updated urllib3 to 2.6.3 for 3 high-severity vulnerabilities
+- Patched Pillow CVE, added type stubs for CI
+- Replaced hardcoded PII with template variables in working tree
 
 ## [2.0.0] - 2025-10-08
 
