@@ -83,12 +83,27 @@ Before installing Finance Guru, ensure you have the following tools installed on
 
 ```bash
 # 1. Fork the repository on GitHub
-# Visit: https://github.com/ORIGINAL-AUTHOR/family-office
+# Visit: https://github.com/ORIGINAL-AUTHOR/Finance-Guru
 # Click "Fork" → Select your account
 
 # 2. Clone YOUR fork (not the original)
-git clone https://github.com/YOUR-USERNAME/family-office.git
-cd family-office
+git clone https://github.com/YOUR-USERNAME/Finance-Guru.git
+cd Finance-Guru
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+sudo apt install software-properties-common -y
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com jammy main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update
+
+uv python install 3.12
+uv sync
+
 ```
 
 **Why fork?**
@@ -128,7 +143,7 @@ uv run python --version  # Should show 3.12+
 tree -L 2 -I 'node_modules|__pycache__|.venv'
 
 # Expected output:
-# family-office/
+# Finance-Guru/
 # ├── .claude/
 # │   ├── hooks/
 # │   └── settings.json
