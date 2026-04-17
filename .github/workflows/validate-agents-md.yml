@@ -21,14 +21,7 @@ jobs:
           globs: |
             AGENTS.md
             CLAUDE.md
-          config: |
-            {
-              "default": true,
-              "MD049": { "style": "underscore" },
-              "MD013": false,
-              "MD033": false,
-              "MD041": false
-            }
+          config: .markdownlint.json
 
       - name: AGENTS.md sanity checks
         run: |
