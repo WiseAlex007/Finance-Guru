@@ -27,6 +27,10 @@
 
 ---
 
+> _What's new in **v2.1.0** (2026-04-16):_ Finance Guru Desktop v1 (Electron + Agent SDK), 17-module agent skills system, completed Hedging & Portfolio Protection milestone, Portfolio/Transaction syncing workflows, options chain CLI, and major repo hygiene. See [CHANGELOG.md](CHANGELOG.md) for details.
+
+---
+
 ## The Problem I Solved
 
 I was drowning in complexity. Every investment decision meant:
@@ -540,7 +544,7 @@ If you find Finance Guru useful, please ⭐ star the repo to help others discove
 ---
 
 <p align="center">
-  <strong>Finance Guru™ v2.0.0</strong><br>
+  <strong>Finance Guru™ v2.1.0</strong><br>
   My AI-powered family office, working exclusively for me.
 </p>
 

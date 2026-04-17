@@ -8,6 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- _SimpleFIN sync app_ scaffold — indie alternative to Plaid for bank account aggregation (`apps/simplefin-sync/`)
+- _Finance Guru vision doc_ — long-form pivot/strategy artifact
+
+## [2.1.0] - 2026-04-16
+
+### Added
+- _Finance Guru Desktop v1_ (`finance-guru-desktop/`) — Electron + Agent SDK desktop app
+  - Electron main process bootstrap with preload IPC bridge (analysis, csv, chat namespaces)
+  - HTML shell with sidebar, tabs, panels, modal, status bar
+  - CSS theme system — 7 modular files, dark theme, financial green accent
+  - Observable State class and portfolio state module
+  - IPC handlers for Python analysis bridge and CSV reader
+  - v1 command registry and analysis allowlist
+  - CommandPalette component with click handlers for tools, skills, agents
+  - Modal dialog with dynamic form builder for command arguments
+  - Plotly dark theme utility with CSS variable bridge
+  - Analysis renderers — Plotly charts, animated gauges, data tables
+  - Renderer wiring — command palette, modal args, analysis execution, CSV loading
+  - Chat IPC handlers with Agent SDK streaming and message queue
+  - ChatView with Agent SDK streaming, skill activation, and agent dispatch
+  - esbuild bundler for renderer
+  - Runtime path validation for repo-bound desktop app
 - _Agent skills system_ — new `.agents/skills/` directory with 17 skill modules (browser automation, brainstorming, coding tutor, document review, frontend design, orchestrating swarms, and more)
 - _Portfolio & Transaction syncing workflows_ — IngestPositions and IngestTransactions workflows for broker CSV import
 - _Options chain CLI_ (`src/analysis/options_pricer_cli.py`) — Greeks, strategy analysis, and chain data
@@ -203,6 +225,7 @@ Finance Guru™ v2.0.0 - Private AI-powered family office system built on BMAD-C
 
 ## Version History
 
+- **v2.1.0** (2026-04-16) - Finance Guru Desktop v1, agent skills system, hedging milestone, repo hygiene
 - **v2.0.0** (2025-10-08) - Initial major release with full agent system
 - **Unreleased** - Current development branch
 
