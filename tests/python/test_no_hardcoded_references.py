@@ -31,6 +31,9 @@ ALLOWED_FILES = {
     "Plans/",  # Session plans (gitignored, not distributed)
     ".prd/",  # PRD files (gitignored, not distributed)
     ".planning/",  # Planning files (gitignored, not distributed)
+    "docs/solutions/",  # Architecture decision records (internal docs)
+    "docs/VISION.md",  # Personal vision document — owner-authored, by definition contains the owner's name
+    "MEMORY/",  # Local research scratch notes (gitignored)
 }
 
 # Files that MUST NOT contain the owner's name
