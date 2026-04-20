@@ -71,7 +71,7 @@ mkdir -p notebooks/updates
 mkdir -p notebooks/retirement-accounts
 mkdir -p notebooks/transactions
 mkdir -p fin-guru-private/fin-guru/analysis
-mkdir -p fin-guru-private/fin-guru/strategies
+mkdir -p fin-guru-private/fin-guru/tickets
 mkdir -p fin-guru/data
 mkdir -p research/finance
 mkdir -p private
@@ -95,8 +95,8 @@ echo "2026-01-12,Margin Interest,-125.50" >> notebooks/transactions/History_for_
 echo "ticker,score,recommendation" > fin-guru-private/fin-guru/analysis/watchlist.csv
 echo "PLTR,8.5,BUY" >> fin-guru-private/fin-guru/analysis/watchlist.csv
 
-echo "# Buy Ticket - TSLA Position" > fin-guru-private/fin-guru/strategies/buy-ticket-2026-01-12.md
-echo "Entry: $350, Target: $400" >> fin-guru-private/fin-guru/strategies/buy-ticket-2026-01-12.md
+echo "# Buy Ticket - TSLA Position" > fin-guru-private/fin-guru/tickets/buy-ticket-2026-01-12.md
+echo "Entry: $350, Target: $400" >> fin-guru-private/fin-guru/tickets/buy-ticket-2026-01-12.md
 
 # Create user profile
 cat > fin-guru/data/user-profile.yaml << 'EOF'
@@ -166,7 +166,7 @@ log_step "Test 5: Verifying fin-guru-private directory is ignored"
 
 private_files=(
     "fin-guru-private/fin-guru/analysis/watchlist.csv"
-    "fin-guru-private/fin-guru/strategies/buy-ticket-2026-01-12.md"
+    "fin-guru-private/fin-guru/tickets/buy-ticket-2026-01-12.md"
 )
 
 for file in "${private_files[@]}"; do
@@ -264,7 +264,7 @@ echo ""
 echo "Summary:"
 echo "  ✓ CSV files (portfolio positions, dividends, transactions) are ignored"
 echo "  ✓ Environment files (.env, .env.local, *.env) are ignored"
-echo "  ✓ fin-guru-private directory (strategies, analysis) is ignored"
+echo "  ✓ fin-guru-private directory (tickets, analysis) is ignored"
 echo "  ✓ notebooks directory (all financial data) is ignored"
 echo "  ✓ User profile (fin-guru/data/user-profile.yaml) is ignored"
 echo "  ✓ Research directory is ignored"

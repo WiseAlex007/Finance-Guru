@@ -30,6 +30,7 @@ User: "Run the monte carlo simulation with current portfolio"
 User: "Run monte carlo with my new buy ticket from 12-31"
 -> Invokes IncorporateBuyTicket workflow
 -> Reads buy ticket from fin-guru-private/fin-guru/tickets/buy-ticket-2025-12-31-*.md
+-> Parses YAML frontmatter + Execution Summary table from the canonical ticket format
 -> Adjusts starting portfolio values based on ticket allocations
 -> Runs simulation with updated positions
 ```

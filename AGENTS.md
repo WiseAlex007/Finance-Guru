@@ -1,6 +1,8 @@
-<!-- SKILLS-INDEX-START -->
+
+
 [Skills Index]|root: ./.claude/skills|Mirrors: ./.agents/skills (symlinked per-skill), ./.pi/skills (top-level symlink → .agents/skills) — makes Finance Guru skills portable to pi-coding-agent and any Agent Skills-standard harness. See docs/reference/cross-harness-skills.md|IMPORTANT: Read full SKILL.md before using any skill. This index is for routing only.|backend-dev-guidelines:{name:backend-dev-guidelines,desc:Comprehensive backend development guide for Node.js/Express/TypeScript microservices.,files:{resources:{architecture-overview.md,async-and-errors.md,complete-examples.md,configuration.md,database-patterns.md,middleware-guide.md,routing-and-controllers.md,sentry-and-monitoring.md,services-and-repositories.md,testing-guide.md,validation-patterns.md}}}|dividend-tracking:{name:dividend-tracking,desc:Sync dividend data from Fidelity CSV to Dividends sheet.,files:{}}|error-tracking:{name:error-tracking,desc:Add Sentry v8 error tracking and performance monitoring to your project services.,files:{}}|fin-core:{name:fin-core,desc:| Finance Guru™ Core Context Loader Auto-loads essential Finance Guru system configuration and user profile at session s,files:{README.md}}|FinanceReport:{name:FinanceReport,desc:Generate institutional-quality PDF analysis reports for stocks and ETFs.,files:{StyleGuide.md,VisGuide.md,tools:{ChartKit.help.md,ChartKit.py,ReportGenerator.help.md,ReportGenerator.py},workflows:{FullResearchWorkflow.md,GenerateSingleReport.md,RegenerateBatch.md}}}|formula-protection:{name:formula-protection,desc:Prevent accidental modification of sacred spreadsheet formulas in Google Sheets Portfolio Tracker.,files:{}}|margin-management:{name:margin-management,desc:Update Margin Dashboard with Fidelity balance data and calculate margin-living strategy metrics.,files:{}}|MonteCarlo:{name:MonteCarlo,desc:Run Monte Carlo simulations for Finance Guru portfolio strategy.,files:{PortfolioParser.md,tools:{.gitkeep},workflows:{IncorporateBuyTicket.md,RunSimulation.md}}}|PortfolioSyncing:{name:PortfolioSyncing,desc:Import and sync broker CSV portfolio data to Google Sheets DataHub.,files:{workflows:{SyncPortfolio.md}}}|python-performance-optimization:{name:python-performance-optimization,desc:Profile and optimize Python code using cProfile, memory profilers, and performance best practices.,files:{}}|readiness-report:{name:readiness-report,desc:Evaluate how well a codebase supports autonomous AI development.,files:{references:{criteria.md,maturity-levels.md},scripts:{analyze_repo.py,generate_report.py}}}|retirement-syncing:{name:retirement-syncing,desc:Sync retirement account data from Vanguard and Fidelity CSV exports to Google Sheets DataHub.,files:{}}|route-tester:{name:route-tester,desc:Test authenticated routes in the your project using cookie-based authentication.,files:{}}|TransactionSyncing:{name:TransactionSyncing,desc:Import Fidelity transaction history CSV into Google Sheets with smart categorization.,files:{CategoryRules.md,workflows:{SyncTransactions.md}}}|[14 skills, 32 files]
-<!-- SKILLS-INDEX-END -->
+
+
 
 ## Project Overview
 
@@ -15,11 +17,13 @@ This is **Finance Guru™** - a private AI-powered family office system built on
 Finance Guru™ uses a **specialized agent architecture** where Claude transforms into different financial specialists:
 
 **Primary Entry Point**:
+
 - **Finance Orchestrator** (Cassandra Holt) - Master coordinator located at `.claude/commands/fin-guru/agents/finance-orchestrator.md`
 
 ## Path Variable System
 
 The codebase uses a variable substitution system:
+
 - `{project-root}` - Root of the repository
 - `{module-path}` - Path to fin-guru module
 - `{current_datetime}` - Current date and time
@@ -31,6 +35,7 @@ When referencing files in agent configurations, these variables should be resolv
 ## External Tool Requirements
 
 Finance Guru requires these MCP servers:
+
 - **exa** - Deep research and market intelligence
 - **bright-data** - Web scraping (search engines, markdown extraction)
 - **sequential-thinking** - Complex multi-step reasoning
@@ -43,6 +48,7 @@ Finance Guru requires these MCP servers:
 **CRITICAL REQUIREMENT**: All agents must establish temporal context before performing any market research or analysis.
 
 Required initialization:
+
 ```bash
 # Agents MUST execute these commands at startup
 date                    # Store as {current_datetime}
@@ -50,6 +56,7 @@ date +"%Y-%m-%d"       # Store as {current_date}
 ```
 
 This ensures:
+
 - Market data searches use current year/date
 - Analysis reflects real-time conditions
 - Documents are properly date-stamped
@@ -57,6 +64,7 @@ This ensures:
 ## Compliance & Disclaimers
 
 **MANDATORY**: All financial outputs must include:
+
 - Educational-only disclaimer
 - "Not investment advice" statement
 - Recommendation to consult licensed professionals
@@ -79,7 +87,9 @@ This positioning is enforced by the Compliance Officer agent.
 ## Python Tools & Utilities
 
 ### Type-Safe Architecture
+
 All Python tools follow a 3-layer architecture pattern:
+
 - **Layer 1**: Pydantic Models (`src/models/`) - Data validation
 - **Layer 2**: Calculator Classes (`src/analysis/`, `src/utils/`) - Business logic
 - **Layer 3**: CLI Interface - Agent integration
@@ -91,6 +101,7 @@ All Python tools follow a 3-layer architecture pattern:
 ## Development Commands
 
 ### Package Management
+
 ```bash
 # Install all dependencies
 uv sync
@@ -106,6 +117,7 @@ uv run python <script-path>
 ```
 
 ### Real-Time Market Data
+
 ```bash
 # Get current stock price (single)
 uv run python src/utils/market_data.py TSLA
@@ -115,6 +127,7 @@ uv run python src/utils/market_data.py TSLA PLTR AAPL
 ```
 
 ### Risk Metrics Analysis
+
 ```bash
 # Market Researcher - Quick risk scan
 uv run python src/analysis/risk_metrics_cli.py TSLA --days 90
@@ -138,6 +151,7 @@ uv run python src/analysis/risk_metrics_cli.py TSLA --days 90 \
 **Documentation**: `fin-guru-private/guides/risk-metrics-tool-guide.md`
 
 ### Momentum Indicators
+
 ```bash
 # Market Researcher - Quick momentum scan (all indicators)
 uv run python src/utils/momentum_cli.py TSLA --days 90
@@ -165,6 +179,7 @@ uv run python src/utils/momentum_cli.py TSLA --days 252 \
 **Features**: Confluence analysis (counts bullish/bearish signals across all indicators)
 
 ### Volatility Metrics
+
 ```bash
 # Market Researcher - Quick volatility scan (all indicators)
 uv run python src/utils/volatility_cli.py TSLA --days 90
@@ -191,11 +206,13 @@ uv run python src/utils/volatility_cli.py TSLA --days 90 \
 **Features**: Volatility regime assessment (low/normal/high/extreme), position sizing guidance, stop-loss calculation
 
 **Agent Use Cases**:
+
 - Compliance Officer: Calculate position limits based on volatility regime
 - Margin Specialist: Determine safe leverage ratios using ATR%
 - Risk Assessment: Portfolio volatility tracking and regime monitoring
 
 ### Correlation & Covariance Analysis
+
 ```bash
 # Basic portfolio correlation (2+ tickers required)
 uv run python src/analysis/correlation_cli.py TSLA PLTR NVDA --days 90
@@ -213,11 +230,13 @@ uv run python src/analysis/correlation_cli.py TSLA PLTR NVDA --days 90 --output 
 **Available Analysis**: Pearson correlation matrices, covariance matrices, rolling correlations, diversification scoring, concentration risk detection
 
 **Agent Use Cases**:
+
 - Strategy Advisor: Portfolio diversification assessment, rebalancing signals
 - Quant Analyst: Correlation matrices for portfolio optimization, factor analysis
 - Risk Assessment: Concentration risk monitoring, correlation regime shifts
 
 ### Strategy Backtesting
+
 ```bash
 # Test RSI strategy
 uv run python src/strategies/backtester_cli.py TSLA --days 252 --strategy rsi
@@ -241,11 +260,13 @@ uv run python src/strategies/backtester_cli.py TSLA --days 252 --strategy rsi --
 **Features**: Transaction cost modeling (commissions + slippage), performance metrics (Sharpe, max drawdown, win rate), trade log generation, deployment recommendations
 
 **Agent Use Cases**:
+
 - Strategy Advisor: Validate investment hypotheses before deployment
 - Quant Analyst: Test quantitative models, optimize parameters
 - Compliance Officer: Assess strategy risk profile before approval
 
 ### Moving Average Analysis
+
 ```bash
 # Single MA calculation (SMA, EMA, WMA, HMA)
 uv run python src/utils/moving_averages_cli.py TSLA --days 200 --ma-type SMA --period 50
@@ -268,11 +289,13 @@ uv run python src/utils/moving_averages_cli.py TSLA --days 200 --ma-type SMA --p
 **Features**: Golden Cross/Death Cross detection, trend analysis, crossover date tracking
 
 **Agent Use Cases**:
+
 - Market Researcher: Quick trend identification with standard MAs
 - Quant Analyst: Test multiple MA types for strategy optimization
 - Strategy Advisor: Monitor 50/200 Golden Cross for major trend signals
 
 ### Portfolio Optimization
+
 ```bash
 # Maximum Sharpe ratio (aggressive growth)
 uv run python src/strategies/optimizer_cli.py TSLA PLTR NVDA SPY --days 252 --method max_sharpe
@@ -303,21 +326,25 @@ uv run python src/strategies/optimizer_cli.py TSLA PLTR NVDA SPY --days 252 --me
 **Features**: Position limit controls, capital allocation guidance ($500k portfolio), efficient frontier generation, diversification scoring
 
 **Agent Use Cases**:
+
 - Strategy Advisor: Monthly portfolio rebalancing and new capital deployment ($5-10k)
 - Quant Analyst: Portfolio construction with risk-return optimization
 - Compliance Officer: Ensure position limits and concentration risk controls
 
 ## Document Output
 
-All generated analyses should be saved to:
-- Primary: `fin-guru-private/fin-guru/analysis/`
+Generated Finance Guru documents use split destinations:
+
+- Analysis artifacts: `fin-guru-private/fin-guru/analysis/`
+- Buy tickets: `fin-guru-private/fin-guru/tickets/`
 - Format: Markdown with YAML frontmatter
-- Naming: `{topic}-{strategy/analysis}-{YYYY-MM-DD}.md`
+- Naming: `{topic}-{strategy/analysis}-{YYYY-MM-DD}.md` (analysis), `buy-ticket-{YYYY-MM-DD}-{descriptor}.md` (tickets)
 - Include: Date stamp, disclaimer, source citations
 
 ## Testing & Validation
 
 The system is primarily workflow-based rather than code-based. Validation involves:
+
 - Testing agent activation sequences
 - Verifying workflow execution
 - Checking document generation
@@ -346,17 +373,18 @@ The system is primarily workflow-based rather than code-based. Validation involv
 2. **Run quality gates** (if code changed) - Tests, linters, builds
 3. **Update issue status** - Close finished work, update in-progress items
 4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
+  ```bash
    git pull --rebase
    bd sync
    git push
    git status  # MUST show "up to date with origin"
-   ```
+  ```
 5. **Clean up** - Clear stashes, prune remote branches
 6. **Verify** - All changes committed AND pushed
 7. **Hand off** - Provide context for next session
 
 **CRITICAL RULES:**
+
 - Work is NOT complete until `git push` succeeds
 - NEVER stop before pushing - that leaves work stranded locally
 - NEVER say "ready to push when you are" - YOU must push

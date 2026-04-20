@@ -1,13 +1,7 @@
-
-
 [Skills Index]|root: ./.claude/skills|Mirror: ./.agents/skills (symlinked) and ./.pi/skills (top-level symlink to .agents/skills) — cross-harness compatible (Claude Code, pi-coding-agent, any Agent Skills-standard harness). See docs/reference/cross-harness-skills.md|Read full SKILL.md before using any skill. Index is for routing only.|dividend-tracking:Sync dividend data from Fidelity CSV to Dividends sheet|fin-core:Finance Guru Core Context Loader (auto-loads at session start)|fin-guru-checklist:Quality and compliance checklists for FG deliverables|fin-guru-compliance-review:Comprehensive compliance reviews for FG deliverables|fin-guru-create-doc:Create institutional-grade financial documents from templates|fin-guru-learner-profile:Build learner profiles for FG teaching and onboarding|fin-guru-quant-analysis:Quantitative analysis of returns, correlations, risk factors|fin-guru-research:Market research workflows (intelligence, sector, competitive)|fin-guru-strategize:Portfolio strategies from quantitative analysis|FinanceReport:Institutional-quality PDF analysis reports for stocks and ETFs|formula-protection:Prevent modification of sacred spreadsheet formulas|margin-management:Margin Dashboard with Fidelity balance data|MonteCarlo:Monte Carlo simulations for portfolio strategy|PortfolioSyncing:Import broker CSV portfolio data to Google Sheets DataHub|python-performance-optimization:Profile and optimize Python with cProfile and memory profilers|readiness-report:Evaluate codebase readiness for autonomous AI development|retirement-syncing:Sync retirement accounts from Vanguard/Fidelity CSV to DataHub|TransactionSyncing:Import Fidelity transaction history CSV with smart categorization|verification-before-completion:Verify work before claiming completion|[19 skills]
 
-
-
-
-
 Finance Guru™ - Private AI family office on BMAD-CORE™ v6.
-_Claude Code only_: ALWAYS use `AskUserQuestion` tool for user questions.
+*Claude Code only*: ALWAYS use `AskUserQuestion` tool for user questions.
 **Key**: This IS Finance Guru (not product) - personal financial command center. Use "your" for assets/strategies/portfolios.
 
 [Architecture]
@@ -24,7 +18,7 @@ Risk Metrics: `src/analysis/risk_metrics_cli.py`;Momentum: `src/utils/momentum_c
 All tools support `--help` for full flag reference. All follow 3-layer pattern: Pydantic→Calculator→CLI.
 
 [Output & Validation]
-Output dir: `fin-guru-private/fin-guru/analysis/`;Format: Markdown+YAML frontmatter with date stamp,disclaimer,citations;Naming: `{topic}-{YYYY-MM-DD}.md` (analysis), `buy-ticket-{YYYY-MM-DD}-{descriptor}.md` (tickets), `{strategy}-master-strategy.md` (strategies)
+Output dirs: `fin-guru-private/fin-guru/analysis/` (analysis), `fin-guru-private/fin-guru/tickets/` (buy tickets);Format: Markdown+YAML frontmatter with date stamp,disclaimer,citations;Naming: `{topic}-{YYYY-MM-DD}.md` (analysis), `buy-ticket-{YYYY-MM-DD}-{descriptor}.md` (tickets), `{strategy}-master-strategy.md` (strategies)
 
 [Version Info]
 Finance Guru™: v2.0.0|BMAD-CORE™: v6.0.0|Build: 2025-10-08|Updated: 2026-02-17|Tools: 9/11 complete

@@ -11,6 +11,7 @@
   <i>ALWAYS communicate in {communication_language}</i>
   <i>Load COMPLETE file {project-root}/fin-guru/data/system-context.md into permanent context</i>
   <i>Always use appropriate templates from templates folder for document creation</i>
+  <i>Route buy-ticket requests to Strategy Advisor or Dividend Specialist; Builder is not the canonical buy-ticket entrypoint</i>
 </critical-actions>
 
 <activation critical="MANDATORY">
@@ -42,10 +43,6 @@
 
   <item cmd="*analysis-report" exec="{project-root}/fin-guru/tasks/create-doc.md" tmpl="{project-root}/fin-guru/templates/analysis-report.md">
     Generate analysis report
-  </item>
-
-  <item cmd="*buy-ticket" exec="{project-root}/fin-guru/tasks/create-doc.md" tmpl="{project-root}/fin-guru/templates/buy-ticket-template.md">
-    Create buy ticket from template
   </item>
 
   <item cmd="*compliance-memo" exec="{project-root}/fin-guru/tasks/create-doc.md" tmpl="{project-root}/fin-guru/templates/compliance-memo.md">

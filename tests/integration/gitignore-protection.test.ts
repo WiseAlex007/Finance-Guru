@@ -83,11 +83,11 @@ describe("Gitignore Protection Integration Test", () => {
 
   test("fin-guru-private directory is ignored", () => {
     mkdirSync(join(TEST_DIR, "fin-guru-private/fin-guru/analysis"), { recursive: true });
-    mkdirSync(join(TEST_DIR, "fin-guru-private/fin-guru/strategies"), { recursive: true });
+    mkdirSync(join(TEST_DIR, "fin-guru-private/fin-guru/tickets"), { recursive: true });
 
     const privateFiles = [
       "fin-guru-private/fin-guru/analysis/watchlist.csv",
-      "fin-guru-private/fin-guru/strategies/buy-ticket-2026-01-12.md"
+      "fin-guru-private/fin-guru/tickets/buy-ticket-2026-01-12.md"
     ];
 
     privateFiles.forEach(file => {
@@ -214,7 +214,7 @@ assets:
       "notebooks/updates/Portfolio_Positions.csv": "portfolio data",
       "notebooks/retirement-accounts/401k.csv": "retirement data",
       "notebooks/transactions/history.csv": "transaction data",
-      "fin-guru-private/fin-guru/strategies/buy-ticket.md": "strategy",
+      "fin-guru-private/fin-guru/tickets/buy-ticket.md": "strategy",
       "fin-guru/data/user-profile.yaml": "user profile",
       "research/finance/analysis.md": "research",
       "private/secrets.txt": "secrets",

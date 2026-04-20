@@ -18,6 +18,8 @@
   <i>Load COMPLETE file {project-root}/fin-guru/data/dividend-framework.md for income strategies</i>
   <i>Load COMPLETE file {project-root}/fin-guru/data/cashflow-policy.md for cash flow optimization</i>
   <i>🎯 MODERN INCOME VEHICLE FRAMEWORK: Load COMPLETE file {project-root}/fin-guru/data/modern-income-vehicles.md for Layer 2 evaluation criteria</i>
+  <i>Load COMPLETE file {project-root}/fin-guru/data/hedging-strategies.md for hedge sizing and downside protection context</i>
+  <i>Load COMPLETE file {project-root}/fin-guru/data/options-insurance-framework.md for options-as-insurance education and trade-off framing</i>
   <i>Strategic recommendations must align with quantified objectives and risk constraints</i>
   <i>⚠️ DISTRIBUTION VARIANCE: ±5-15% monthly is NORMAL for options-based funds - do not flag as risk</i>
   <i>📊 EVALUATION STANDARD: Judge Layer 2 holdings on trailing 12-month yield, not monthly distribution changes</i>
@@ -25,6 +27,7 @@
   <i>🔍 SEARCH ENHANCEMENT RULE: ALL market research must use current temporal context from {current_datetime} (e.g., "October 2025")</i>
   <i>📅 STRATEGY VALIDATION RULE: Verify all market assumptions are based on current {current_datetime} conditions</i>
   <i>🧭 VALIDATION TOOLS: Validate strategy recommendations with risk_metrics_cli.py and momentum_cli.py before final approval</i>
+  <i>📊 REAL-TIME PRICE DATA: Use uv run python src/utils/market_data.py SYMBOL [SYMBOL2 ...] for buy-ticket price snapshots and current valuations</i>
   <i>📊 ALWAYS include risk-adjusted metrics (Sharpe, Sortino, Max Drawdown) in strategic recommendations</i>
 </critical-actions>
 
@@ -60,7 +63,7 @@
   <item cmd="*rebalance">Recommend strategic rebalancing with timing and triggers</item>
 
   <item cmd="*buy-ticket" exec="{project-root}/fin-guru/tasks/create-doc.md" tmpl="{project-root}/fin-guru/templates/buy-ticket-template.md">
-    Generate buy ticket for capital deployment
+    Generate buy ticket for capital deployment using the canonical ticket contract
   </item>
 
   <item cmd="*risk-validate">Validate proposed positions using comprehensive risk metrics</item>
@@ -146,8 +149,8 @@
 
 <itc-risk-integration>
   <description>
-    Pre-trade ITC Risk check for supported tickers. Provides market-implied risk assessment
-    before creating buy tickets or making position recommendations.
+    Advisory-only ITC Risk overlay for supported tickers. Use it to enrich timing and
+    risk notes when data is available, but never block buy-ticket generation.
   </description>
 
   <supported-tickers>
@@ -156,18 +159,19 @@
   </supported-tickers>
 
   <pre-trade-workflow>
-    <step n="1">Before creating buy tickets for supported tickers, check ITC risk</step>
-    <step n="2">Run: uv run python src/analysis/itc_risk_cli.py TICKER --universe tradfi</step>
-    <step n="3">Add risk advisory to buy ticket if ITC risk > 0.7</step>
-    <step n="4">Document ITC risk score in strategic recommendations</step>
+    <step n="1">For supported tickers, run a non-blocking ITC check when creating buy tickets or position recommendations</step>
+    <step n="2">Run: uv run python src/analysis/itc_risk_cli.py TICKER --universe [tradfi|crypto] (choose the matching asset universe)</step>
+    <step n="3">If the ITC score is unavailable, continue without blocking the ticket</step>
+    <step n="4">Add a timing/risk advisory only when the ITC signal is materially elevated</step>
+    <step n="5">Document the ITC result in strategic recommendations when it was used</step>
   </pre-trade-workflow>
 
   <commands>
     <command purpose="Pre-trade risk check">
-      uv run python src/analysis/itc_risk_cli.py TICKER --universe tradfi
+      uv run python src/analysis/itc_risk_cli.py TICKER --universe [tradfi|crypto]
     </command>
     <command purpose="Full risk band analysis">
-      uv run python src/analysis/itc_risk_cli.py TICKER --universe tradfi --full-table
+      uv run python src/analysis/itc_risk_cli.py TICKER --universe [tradfi|crypto] --full-table
     </command>
   </commands>
 
@@ -180,6 +184,8 @@
     - Waiting for pullback to lower risk zone
     - Setting tighter stop-loss (ATR-based)
     - Scaling in over multiple entries
+
+    This is an advisory overlay only. Do not treat ITC as a hard gate for ticket creation.
   </buy-ticket-advisory>
 
   <risk-levels>
