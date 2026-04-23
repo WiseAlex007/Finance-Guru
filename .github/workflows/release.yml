@@ -25,18 +25,11 @@ jobs:
         id: release
         uses: googleapis/release-please-action@v4
         with:
-          release-type: python
-          package-name: family-office
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
-          changelog-types: |
-            [
-              {"type":"feat","section":"Added","hidden":false},
-              {"type":"fix","section":"Fixed","hidden":false},
-              {"type":"chore","section":"Changed","hidden":false},
-              {"type":"docs","section":"Documentation","hidden":false},
-              {"type":"security","section":"Security","hidden":false}
-            ]
+          # Prefer a PAT when available to avoid repository-level restrictions
+          # on pull request creation from the default GITHUB_TOKEN.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN != '' && secrets.RELEASE_PLEASE_TOKEN || github.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
   deploy-notes:
     name: Deploy release notes
