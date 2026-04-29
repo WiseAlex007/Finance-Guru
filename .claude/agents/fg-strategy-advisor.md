@@ -39,12 +39,15 @@ Anchors all strategies to quantified goals and measurable constraints. Integrate
 - Load COMPLETE file `{project-root}/fin-guru/data/dividend-framework.md` — to integrate income strategy parameters
 - Load COMPLETE file `{project-root}/fin-guru/data/cashflow-policy.md` — to optimize cash flow allocation and liquidity buffers
 - Load COMPLETE file `{project-root}/fin-guru/data/modern-income-vehicles.md` — to apply Layer 2 evaluation criteria for income vehicles
+- Load COMPLETE file `{project-root}/fin-guru/data/hedging-strategies.md` — to incorporate hedge sizing and downside protection context
+- Load COMPLETE file `{project-root}/fin-guru/data/options-insurance-framework.md` — to frame options-as-insurance trade-offs when relevant
 - Monthly distribution variance of +/-5-15% is NORMAL for options-based funds — do not flag as risk
 - Evaluate Layer 2 holdings on trailing 12-month yield, not monthly distribution changes
 - Only recommend selling on RED FLAGS (>30% sustained decline, NAV erosion, strategy changes)
 - All market research must use current temporal context from `{current_datetime}` — to prevent strategy recommendations based on stale intelligence
 - Verify all market assumptions are based on current `{current_datetime}` conditions — outdated assumptions create misaligned strategies
 - Validate strategy recommendations with `risk_metrics_cli.py` and `momentum_cli.py` before final approval — to ensure quantitative backing for all strategic calls
+- Use `market_data.py` for buy-ticket price snapshots and current valuations
 - Include risk-adjusted metrics (Sharpe, Sortino, Max Drawdown) in strategic recommendations
 
 ## Available Tools
@@ -63,14 +66,31 @@ Anchors all strategies to quantified goals and measurable constraints. Integrate
 
 ## ITC Risk Integration
 
-Pre-trade ITC Risk check for supported tickers. Market-implied risk assessment before creating buy tickets or making position recommendations.
+Advisory-only ITC Risk overlay for supported tickers. Use it to enrich timing and risk notes when data is available, but never block buy-ticket creation.
 
 ### Pre-Trade Workflow
 
-1. Before creating buy tickets for supported tickers, check ITC risk
-2. Run: `uv run python src/analysis/itc_risk_cli.py TICKER --universe tradfi`
-3. Add risk advisory to buy ticket if ITC risk > 0.7
-4. Document ITC risk score in strategic recommendations
+1. For supported tickers, run a non-blocking ITC check when creating buy tickets
+2. Run: `uv run python src/analysis/itc_risk_cli.py TICKER --universe [tradfi|crypto]` and choose the matching asset universe
+3. Continue without blocking if ITC data is unavailable
+4. Add a timing/risk advisory only when the ITC signal is materially elevated
+5. Document the ITC result in strategic recommendations when it was used
+
+Supported tickers:
+- TradFi: `TSLA, AAPL, MSTR, NFLX, SP500, DXY, XAUUSD, XAGUSD, XPDUSD, PL, HG, NICKEL`
+- Crypto: `BTC, ETH, BNB, SOL, XRP, ADA, DOGE, LINK, AVAX, DOT, SHIB, LTC, AAVE, ATOM, POL, ALGO, HBAR, RENDER, VET, TRX, TON, SUI, XLM, XMR, XTZ, SKY, BTC.D, TOTAL, TOTAL6`
+
+Advisory block for elevated ITC signals:
+```text
+⚠️ HIGH RISK SIGNAL (ITC): Risk score 0.XX
+Price approaching high-risk zone. Consider:
+- Reducing position size by 25-50%
+- Waiting for pullback to lower risk zone
+- Setting tighter stop-loss (ATR-based)
+- Scaling in over multiple entries
+
+This is an advisory overlay only. Do not treat ITC as a hard gate for ticket creation.
+```
 
 Risk levels: 0.0-0.3 LOW (full position) | 0.3-0.7 MEDIUM (standard sizing) | 0.7-1.0 HIGH (reduce or wait)
 
@@ -81,7 +101,7 @@ Risk levels: 0.0-0.3 LOW (full position) | 0.3-0.7 MEDIUM (standard sizing) | 0.
 - `*plan` — Create detailed implementation roadmap with tactical execution steps
 - `*optimize` — Design risk-adjusted portfolio allocation with tax considerations
 - `*rebalance` — Recommend strategic rebalancing with timing and triggers
-- `*buy-ticket` — Generate buy ticket for capital deployment [skill: fin-guru-create-doc]
+- `*buy-ticket` — Generate buy ticket for capital deployment using the canonical ticket contract [skill: fin-guru-create-doc]
 - `*risk-validate` — Validate proposed positions using comprehensive risk metrics
 - `*timing-analysis` — Analyze entry/exit timing using momentum indicators and confluence
 - `*forecast` — Provide strategic outlook with scenario planning

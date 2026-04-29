@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: Release Please — automated release + publish PRs
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created || 'false' }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Check release token availability
+        id: token
+        env:
+          RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+        run: |
+          if [ -n "${RELEASE_PLEASE_TOKEN}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run release-please
+        if: steps.token.outputs.available == 'true'
+        id: release
+        uses: googleapis/release-please-action@v5
+        with:
+          # Use a PAT so release-please can create PRs even when the repository
+          # disables PR creation for the default GITHUB_TOKEN.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Skip release-please when token is missing
+        if: steps.token.outputs.available != 'true'
+        run: |
+          echo "::warning::RELEASE_PLEASE_TOKEN is not configured. Skipping release-please to avoid a hard workflow failure."
+          echo "Release Please skipped: configure RELEASE_PLEASE_TOKEN or enable GitHub Actions PR creation in repository settings." >> "$GITHUB_STEP_SUMMARY"
+
+  deploy-notes:
+    name: Deploy release notes
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Announce deploy + observability (datadog-style notify)
+        run: |
+          echo "::notice::Release ${{ needs.release-please.outputs.tag_name }} created and ready to deploy."
+          echo "Tag: ${{ needs.release-please.outputs.tag_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "This is an announce-only step — no binaries are published." >> "$GITHUB_STEP_SUMMARY"
+          # Deployment observability hook — wire up to Grafana/Datadog here when available.
+          # For now we emit a local-voice notify for the solo maintainer.
+          curl -s -X POST http://localhost:8888/notify \
+            -H "Content-Type: application/json" \
+            -d "{\"message\":\"Release ${{ needs.release-please.outputs.tag_name }} created.\",\"voice_enabled\":false}" \
+            || true

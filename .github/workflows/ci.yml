@@ -16,10 +16,25 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
+
+      - name: Validate exported requirements.txt is in sync
+        env:
+          UV_CACHE_DIR: ${{ runner.temp }}/uv-cache
+        run: |
+          uv export --format requirements.txt --no-hashes --no-emit-project --frozen | diff -u requirements.txt -
+
+      - name: Set up Bun
+        # Needed by tests that shell out to bun for the onboarding
+        # TypeScript sections (test_cash_flow_section, test_debt_profile_section,
+        # test_investment_portfolio_section, test_liquid_assets_section,
+        # test_onboarding_summary, test_preferences_section).
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Install dependencies
         run: uv sync --dev

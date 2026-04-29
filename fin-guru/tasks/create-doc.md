@@ -14,6 +14,29 @@ This workflow drives interactive creation of Finance Guru artifacts (analysis re
 
 If the user does not specify a template, list options under `{project-root}/fin-guru/templates/` (e.g., `analysis-report.md`, `presentation-format.md`, `excel-model-spec.md`). Ask which deliverable they need and confirm output filename + format.
 
+If the selected template is `buy-ticket-template.md`, treat it as a canonical trade ticket with a stricter contract:
+
+- Do not create buy tickets from Builder or generic document-only routing; hand off to Strategy Advisor or Dividend Specialist first
+- Require upstream portfolio context before drafting
+- Confirm deployment amount and available cash buffer
+- Require a concrete allocation table with tickers, dollars, weights, prices, and shares
+- Require strategy rationale, risk notes, and a price snapshot timestamp
+- Save the final ticket under `fin-guru-private/fin-guru/tickets/`
+
+## Buy Ticket Contract
+
+When creating a buy ticket, do not draft from vague strategy text alone. Confirm the ticket includes all of the following before it is considered complete:
+
+1. Portfolio context loaded from current holdings/balances
+2. Explicit deployment amount and available cash
+3. Structured execution summary with ticker-level allocations
+4. Current price snapshot with timestamp/source
+5. Strategy rationale by category or bucket
+6. Risk notes relevant to sizing, concentration, volatility, or margin
+7. Sources & assumptions block plus the full disclaimer block
+
+ITC risk is advisory-only. For supported tickers, include an ITC advisory section only when upstream analysis provided a materially elevated signal. Missing ITC data must never block ticket creation.
+
 ## Interactive Section Processing
 
 For each template section:
@@ -23,6 +46,7 @@ For each template section:
    - Align with research → quant → strategy → artifact phases.
    - Cite assumptions, data sources, and timestamps per OutputPolicy.
    - Integrate risk metrics (VaR, drawdowns) and strategy notes when relevant.
+   - For buy tickets, preserve the canonical structure: YAML frontmatter + `## Execution Summary` table + rationale/risk/source sections.
 3. Provide **detailed rationale** covering:
    - Financial assumptions (rates, fees, tax settings, scenario ranges)
    - Trade-offs made across strategies (margin buffers vs. yield targets)
@@ -53,6 +77,8 @@ For each template section:
 ## Saving & Output Policy
 
 - Confirm desired file format using Finance Guru overrides: `[format:xlsx|pptx|pdf|md]`, `[save:/finance/reports/name.ext]`.
+- Save analysis reports, memos, presentations, and other research artifacts under `fin-guru-private/fin-guru/analysis/`.
+- Save buy tickets under `fin-guru-private/fin-guru/tickets/`.
 - Append Sources & Assumptions section summarizing:
   - Data sources with timestamps
   - Key assumptions (rates, tax brackets, margin costs)
@@ -78,4 +104,5 @@ Before finishing, confirm:
 - Disclaimers, assumptions, and next steps present
 - Any models or appendices referenced have been generated or linked
 - User approves saving/export instructions
+- Buy tickets include portfolio context, execution summary, price snapshot, and risk notes
 - Optionally hand off to Compliance Officer for a final audit

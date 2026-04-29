@@ -38,43 +38,43 @@ bmad install fin-guru
 ### 🤖 Agents (13 Specialists)
 
 #### Core Orchestration
+
 - **Finance Orchestrator** (Cassandra Holt) - Master Portfolio Coordinator
   - Entry point for all Finance Guru engagements
   - Routes requests to appropriate specialists
   - Maintains compliance and audit trail
 
 #### Primary Specialists
+
 - **Market Researcher** (Dr. Aleksandr Petrov) - Intelligence Gathering
   - Market research and competitive intelligence
   - Macro regime identification
   - Catalyst discovery and validation
-
 - **Quant Analyst** (Dr. Priya Desai) - Quantitative Modeling
   - Statistical analysis and backtesting
   - Portfolio optimization
   - Monte Carlo simulations
-
 - **Strategy Advisor** (Elena Rodriguez-Park) - Portfolio Planning
   - Converts analysis into actionable strategies
   - Implementation roadmaps
   - Risk-adjusted optimization
-
 - **Compliance Officer** (Marcus Allen) - Risk & Compliance
   - Educational-only positioning enforcement
   - Source citation verification
   - Risk transparency and disclosure
-
 - **Teaching Specialist** (Maya Brooks) - Financial Education
   - ADHD-friendly micro-learning
   - Progressive profiling
   - Adaptive teaching modes
 
 #### Domain Specialists
+
 - **Margin Specialist** (Richard Chen) - Margin Trading Strategies
 - **Dividend Specialist** (Sarah Martinez) - Income Optimization
 - **Onboarding Specialist** (James Cooper) - Client Profiling
 
 #### Support Agents
+
 - **Builder** (Alexandra Kim) - Document & Artifact Creation
 - **QA Advisor** (Dr. Jennifer Wu) - Quality Assurance
 - **Specialist** - Base Template
@@ -83,22 +83,26 @@ bmad install fin-guru
 ### 📋 Tasks (21 Workflows)
 
 **Research & Analysis**
+
 - research-workflow
 - quantitative-analysis
 - create-deep-research-prompt
 - index-docs
 
 **Strategy & Planning**
+
 - strategy-integration
 - dividend-analysis
 - risk-profile
 
 **Compliance & Quality**
+
 - compliance-review
 - execute-checklist
 - trace-requirements
 
 **Teaching & Learning**
+
 - teaching-workflow
 - adaptive-teaching
 - build-learner-profile
@@ -106,17 +110,21 @@ bmad install fin-guru
 - context-aware-loading
 
 **Document Creation**
+
 - artifact-creation
 - create-doc
 - facilitate-brainstorming-session
 - advanced-elicitation
 
 **Utilities**
+
 - profile-parser
 - kb-mode-interaction
 
-### 📄 Templates (7 Documents)
+### 📄 Templates (8 Documents)
+
 - analysis-report.md
+- buy-ticket-template.md
 - compliance-memo.md
 - excel-model-spec.md
 - income-strategy-template.md
@@ -125,6 +133,7 @@ bmad install fin-guru
 - presentation-format.md
 
 ### ✅ Checklists (4 Frameworks)
+
 - analyst-checklist.md
 - margin-strategy.md
 - cashflow-policy.md
@@ -198,21 +207,25 @@ Finance Guru™ uses a systematic 4-stage workflow:
 ```
 
 **Stage 1: Research (Market Researcher)**
+
 - Gather market intelligence
 - Identify catalysts and risks
 - Validate data sources
 
 **Stage 2: Quant (Quant Analyst)**
+
 - Statistical analysis
 - Risk/return modeling
 - Backtesting strategies
 
 **Stage 3: Strategy (Strategy Advisor)**
+
 - Convert analysis to actionable plans
 - Implementation roadmaps
 - Monitoring frameworks
 
 **Stage 4: Artifacts (Builder)**
+
 - Create deliverables
 - Format reports
 - Generate presentations
@@ -226,6 +239,7 @@ Each stage can be invoked independently or as part of the full pipeline.
 Module configuration is in `fin-guru/config.yaml`
 
 Key settings:
+
 ```yaml
 module_name: "Finance Guru™"
 module_code: fin-guru
@@ -267,13 +281,15 @@ Finance Guru™ requires these MCP servers/tools:
 ## Development Roadmap
 
 ### Phase 1: Core Foundation ✅
+
 - [x] 13 BMAD v6 agents
 - [x] 21 task workflows
-- [x] 7 document templates
+- [x] 8 document templates
 - [x] 4 quality checklists
 - [x] Comprehensive knowledge base
 
 ### Phase 2: Enhancements (Future)
+
 - [ ] Additional workflow automations
 - [ ] Enhanced backtesting frameworks
 - [ ] Tax optimization strategies
@@ -281,6 +297,7 @@ Finance Guru™ requires these MCP servers/tools:
 - [ ] Multi-currency support
 
 ### Phase 3: Integration (Future)
+
 - [ ] Real-time data feeds
 - [ ] Brokerage API integration
 - [ ] Portfolio tracking automation
@@ -293,6 +310,7 @@ Finance Guru™ requires these MCP servers/tools:
 ⚠️ **EDUCATIONAL ONLY**
 
 Finance Guru™ provides educational content only. It is NOT:
+
 - Investment advice
 - Financial planning services
 - Tax or legal counsel
@@ -336,6 +354,7 @@ Built on BMAD-CORE™ v6.
 ## Version History
 
 **v2.0.0** (2025-10-08) - BMAD v6 Rebuild
+
 - Complete rebuild using BMAD-CORE™ v6 architecture
 - XML-based agent configurations
 - Enhanced activation sequences
@@ -343,6 +362,7 @@ Built on BMAD-CORE™ v6.
 - Comprehensive documentation
 
 **v1.0.0** (2025-09-25) - Initial Release
+
 - Original Finance Guru™ system
 - YAML-based agent configurations
 - Core workflow pipeline

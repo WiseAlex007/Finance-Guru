@@ -79,7 +79,7 @@ done
 
 ## Output & Validation
 
-**Document Output**: `fin-guru-private/fin-guru/analysis/` | Format: Markdown + YAML frontmatter | Required: Date stamp, disclaimer, citations
+**Document Output**: `fin-guru-private/fin-guru/analysis/` for analysis artifacts and `fin-guru-private/fin-guru/tickets/` for buy tickets | Format: Markdown + YAML frontmatter | Required: Date stamp, disclaimer, citations
 
 **Naming Conventions**:
 - Analysis reports: `{topic}-{YYYY-MM-DD}.md`

@@ -28,17 +28,28 @@ ls fin-guru-private/fin-guru/tickets/buy-ticket-*12-31*.md 2>/dev/null || ls fin
 ### Step 2: Parse the Buy Ticket
 
 Read the buy ticket and extract:
-- **Total amount**: The total $ being deployed
-- **Allocations**: Which tickers and how much to each
+- **Frontmatter metadata**:
+  - `deployment_amount`
+  - `cash_available`
+  - `price_snapshot_as_of`
+  - `generated_on`
+- **Execution Summary allocations**: Which tickers and how much to each
 
 Example buy ticket format:
 ```markdown
+---
+document_type: buy-ticket
+deployment_amount: "$5,054.09"
+cash_available: "$6,000.00"
+price_snapshot_as_of: "2026-01-31T09:45:00-05:00"
+---
+
 ## Execution Summary
-| Ticker | Amount | Bucket |
-|--------|--------|--------|
-| JEPI | $500 | JPMorgan Income |
-| JEPQ | $500 | JPMorgan Income |
-| CLM | $1,000 | CEF Stable |
+| Ticker | Category | Weight | $ Amount | Price | Shares |
+|--------|----------|--------|----------|-------|--------|
+| JEPI | JPMorgan Income | 10.0% | $500 | $55.00 | 9.09 |
+| JEPQ | JPMorgan Income | 10.0% | $500 | $52.00 | 9.61 |
+| CLM | CEF Stable | 20.0% | $1,000 | $7.50 | 133.33 |
 ...
 ```
 

@@ -328,8 +328,10 @@ category: reports
 
 ### Output Document Validation
 
-**Location**: `fin-guru-private/fin-guru/analysis/`
+**Locations**:
 
+- [ ] Analysis artifacts: `fin-guru-private/fin-guru/analysis/`
+- [ ] Buy tickets: `fin-guru-private/fin-guru/tickets/`
 - [ ] Analysis reports follow naming convention: `{topic}-{YYYY-MM-DD}.md`
 - [ ] Buy tickets named correctly: `buy-ticket-{YYYY-MM-DD}-{short-descriptor}.md`
 - [ ] Strategy docs: `{strategy-name}-master-strategy.md`
@@ -341,6 +343,7 @@ Every generated document must have:
 
 - [ ] YAML frontmatter with metadata
 - [ ] Date stamp in filename
+- [ ] Buy tickets include a structured `## Execution Summary` section
 - [ ] Compliance disclaimer: "Educational purposes only"
 - [ ] Risk disclosure statement
 - [ ] "Not investment advice" notice
@@ -373,7 +376,7 @@ Every generated document must have:
 
 1. [ ] **Market Research**: Run momentum indicators
 2. [ ] **Risk Analysis**: Calculate risk metrics
-3. [ ] **ITC Risk Check**: Determine risk band
+3. [ ] **ITC Advisory Check**: For supported tickers, verify the non-blocking ITC overlay is applied appropriately
 4. [ ] **Volatility Assessment**: Check ATR and Bollinger Bands
 5. [ ] **Strategy Validation**: Backtest entry strategy
 6. [ ] **Buy Ticket Generation**: Create properly formatted buy ticket

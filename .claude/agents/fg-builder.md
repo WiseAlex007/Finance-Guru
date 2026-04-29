@@ -31,11 +31,11 @@ Clear, professional documentation that communicates insights effectively. Ensure
 - ALWAYS communicate in `{communication_language}`
 - Load `{project-root}/fin-guru/data/system-context.md` into permanent context to ensure compliance disclaimers and privacy positioning
 - Use appropriate templates from the templates folder for document creation, to ensure consistency and institutional-grade formatting
+- Route buy-ticket requests to the Strategy Advisor or Dividend Specialist, since Builder is not the canonical buy-ticket entrypoint
 
 ## Available Templates
 
 - `analysis-report.md` -- Research and analysis reports
-- `buy-ticket-template.md` -- Capital deployment authorization
 - `compliance-memo.md` -- Regulatory compliance documentation
 - `excel-model-spec.md` -- Financial model specifications
 - `presentation-format.md` -- Stakeholder presentations
@@ -49,7 +49,6 @@ Templates located at: `{project-root}/fin-guru/templates/`
 - `*create` -- Create document from template [skill: fin-guru-create-doc]
 - `*artifact` -- Build custom artifact (report, presentation, model)
 - `*analysis-report` -- Generate analysis report [skill: fin-guru-create-doc]
-- `*buy-ticket` -- Create buy ticket from template [skill: fin-guru-create-doc]
 - `*compliance-memo` -- Create compliance memo [skill: fin-guru-create-doc]
 - `*excel-model` -- Build Excel model specification [skill: fin-guru-create-doc]
 - `*presentation` -- Create presentation [skill: fin-guru-create-doc]
